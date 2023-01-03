@@ -17,15 +17,21 @@ const initialState: IAuthInitialState = {
 export const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {},
+    reducers: {
+        logout(state) {
+            state.user = null;
+            state.status = null;
+            state.token = null;
+        }
+    },
     extraReducers: builder => {
         builder.addCase(registration.pending, state => {
             state.status = "pending";
         });
         builder.addCase(registration.fulfilled, (state, { payload }) => {
             state.status = "fulfilled";
-            state.token = payload.data.token;
-            state.user = payload.data.user;
+            state.token = payload.token;
+            state.user = payload.user;
         });
         builder.addCase(registration.rejected, state => {
             state.status = "rejected";
@@ -37,8 +43,8 @@ export const authSlice = createSlice({
         });
         builder.addCase(login.fulfilled, (state, { payload }) => {
             state.status = "fulfilled";
-            state.token = payload.data.token;
-            state.user = payload.data.user;
+            state.token = payload.token;
+            state.user = payload.user;
         });
         builder.addCase(login.rejected, state => {
             state.status = "rejected";

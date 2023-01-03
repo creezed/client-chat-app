@@ -1,3 +1,4 @@
+import { useActions } from "../../../hooks/redux/useActions";
 import {
     IconButton,
     Input,
@@ -6,7 +7,8 @@ import {
     Menu,
     MenuButton,
     MenuItem,
-    MenuList
+    MenuList,
+    useToast
 } from "@chakra-ui/react";
 import { ConversationSidebarItem } from "@components/conversation/sidebar/item";
 import { IConversation } from "@utils/types";
@@ -40,6 +42,21 @@ const fakeData: IConversation[] = [
 ];
 
 export const ConversationSidebar = () => {
+    const { logout } = useActions();
+    const toast = useToast();
+
+    const logOut = () => {
+        logout();
+        toast({
+            title: "Success",
+            description: "Success log out",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+            position: "top-right"
+        });
+    };
+
     return (
         <aside className={styles.sidebar}>
             <header className={styles.sidebarHeader}>
@@ -51,10 +68,7 @@ export const ConversationSidebar = () => {
                         variant='outline'
                     />
                     <MenuList>
-                        <MenuItem command='⌘T'>New Tab</MenuItem>
-                        <MenuItem command='⌘N'>New Window</MenuItem>
-                        <MenuItem command='⌘⇧N'>Open Closed Tab</MenuItem>
-                        <MenuItem command='⌘O'>Open File...</MenuItem>
+                        <MenuItem onClick={logOut}>log out</MenuItem>
                     </MenuList>
                 </Menu>
                 <InputGroup>

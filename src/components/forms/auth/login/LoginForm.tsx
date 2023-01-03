@@ -8,8 +8,7 @@ import {
     Input,
     InputGroup,
     InputRightElement,
-    Text,
-    useToast
+    Text
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames";
@@ -23,7 +22,6 @@ import { loginFormSchema } from "components/forms/auth/login/schema/login-form.s
 import indexStyle from "components/forms/index.module.scss";
 
 export const LoginForm = () => {
-    const toast = useToast();
     const { login } = useActions();
     const { status } = useTypedSelector(state => state.auth);
     const [showPassword, setShowPassword] = useState(false);
@@ -39,19 +37,7 @@ export const LoginForm = () => {
     });
 
     const onSubmit = (data: ILoginUser) => {
-        try {
-            login(data);
-            toast({
-                title: "Success",
-                description: "Success authorization",
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-                position: "top-right"
-            });
-        } catch (err) {
-            console.log(err);
-        }
+        login(data);
     };
 
     return (
@@ -94,7 +80,12 @@ export const LoginForm = () => {
                 <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
             </FormControl>
 
-            <Button colorScheme='blue' type='submit' disabled={status === "pending"}>
+            <Button
+                colorScheme='blue'
+                type='submit'
+                isLoading={status === "pending"}
+                loadingText='login'
+            >
                 Войти
             </Button>
             <label

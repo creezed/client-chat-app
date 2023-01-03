@@ -1,4 +1,4 @@
-import { RegisterForm } from "@components/forms/auth/register/RegisterForm";
+import { RegisterForm } from "@components/forms/auth/register";
 
 import styles from "../auth-page.module.scss";
 

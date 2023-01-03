@@ -1,4 +1,4 @@
-import { LoginForm } from "@components/forms/auth/login/LoginForm";
+import { LoginForm } from "@components/forms/auth/login";
 
 import styles from "../auth-page.module.scss";
 

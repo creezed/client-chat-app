@@ -1,3 +1,5 @@
+import { useActions } from "../../../../hooks/redux/useActions";
+import { useTypedSelector } from "../../../../hooks/redux/useTypedSelector";
 import {
     Button,
     FormControl,
@@ -20,7 +22,9 @@ import authStyle from "components/forms/auth/auth.module.scss";
 import indexStyle from "components/forms/index.module.scss";
 
 export const RegisterForm = () => {
+    const { registration } = useActions();
     const [showPassword, setShowPassword] = useState(false);
+    const { status } = useTypedSelector(state => state.auth);
     const handleClick = () => setShowPassword(!showPassword);
 
     const {
@@ -33,7 +37,7 @@ export const RegisterForm = () => {
     });
 
     const onSubmit = (data: IRegisterUser) => {
-        console.log(data);
+        registration(data);
     };
 
     return (
@@ -48,13 +52,21 @@ export const RegisterForm = () => {
 
             <div className={classNames(indexStyle.FormRow, indexStyle.FormSpaceMedium)}>
                 <FormControl isInvalid={!!errors.firstName}>
-                    <Input placeholder={"Имя"} {...register("firstName")} />
+                    <Input
+                        placeholder={"Имя"}
+                        {...register("firstName")}
+                        autoComplete={"given-name"}
+                    />
                     <FormErrorMessage>
                         {errors.firstName && errors.firstName.message}
                     </FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={!!errors.lastName}>
-                    <Input placeholder={"Фамилия"} {...register("lastName")} />
+                    <Input
+                        placeholder={"Фамилия"}
+                        {...register("lastName")}
+                        autoComplete={"family-name"}
+                    />
                     <FormErrorMessage>
                         {errors.lastName && errors.lastName.message}
                     </FormErrorMessage>
@@ -66,6 +78,7 @@ export const RegisterForm = () => {
                         pr='4.5rem'
                         type={showPassword ? "text" : "password"}
                         placeholder='Введите пароль'
+                        autoComplete={"current-password"}
                         {...register("password")}
                     />
                     <InputRightElement
@@ -83,7 +96,12 @@ export const RegisterForm = () => {
                 </InputGroup>
                 <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
             </FormControl>
-            <Button colorScheme={"blue"} type={"submit"}>
+            <Button
+                colorScheme={"blue"}
+                type={"submit"}
+                isLoading={status === "pending"}
+                loadingText={"registration..."}
+            >
                 Зарегистрироваться
             </Button>
             <label

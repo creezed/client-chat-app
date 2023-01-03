@@ -1,4 +1,4 @@
-import { ILoginUser } from "@components/forms/auth/login/login-form.interface";
+import { ILoginUser } from "@components/forms/auth/login";
 import * as yup from "yup";
 
 export const loginFormSchema = yup.object<Record<keyof ILoginUser, yup.AnySchema>>().shape({
