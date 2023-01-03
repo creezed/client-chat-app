@@ -1,3 +1,5 @@
+import { useActions } from "../../../../hooks/redux/useActions";
+import { useTypedSelector } from "../../../../hooks/redux/useTypedSelector";
 import { ILoginUser } from "./login-form.interface";
 import {
     Button,
@@ -6,7 +8,8 @@ import {
     Input,
     InputGroup,
     InputRightElement,
-    Text
+    Text,
+    useToast
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames";
@@ -20,6 +23,9 @@ import { loginFormSchema } from "components/forms/auth/login/schema/login-form.s
 import indexStyle from "components/forms/index.module.scss";
 
 export const LoginForm = () => {
+    const toast = useToast();
+    const { login } = useActions();
+    const { status } = useTypedSelector(state => state.auth);
     const [showPassword, setShowPassword] = useState(false);
     const handleClick = () => setShowPassword(!showPassword);
 
@@ -33,7 +39,19 @@ export const LoginForm = () => {
     });
 
     const onSubmit = (data: ILoginUser) => {
-        console.log(data);
+        try {
+            login(data);
+            toast({
+                title: "Success",
+                description: "Success authorization",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "top-right"
+            });
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -76,7 +94,7 @@ export const LoginForm = () => {
                 <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
             </FormControl>
 
-            <Button colorScheme='blue' type='submit'>
+            <Button colorScheme='blue' type='submit' disabled={status === "pending"}>
                 Войти
             </Button>
             <label

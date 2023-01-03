@@ -8,6 +8,9 @@
   "arrowParens": "avoid",
   "importOrder": [
     "<THIRD_PARTY_MODULES>",
+    "^store/(.*)$",
+    "^services/(.*)$",
+    "^api/(.*)$",
     "^components/(.*)$",
     "^utils/(.*)$",
     "(.scss)"

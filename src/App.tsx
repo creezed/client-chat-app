@@ -1,14 +1,32 @@
 import LoginPage from "./pages/auth/login/LoginPage";
 import RegistrationPage from "./pages/auth/registration/RegistrationPage";
-import { ChakraProvider } from "@chakra-ui/react";
+import ConversationPanelPage from "./pages/conversation-panel/ConversationPanelPage";
+import ConversationPage from "./pages/conversation/ConversationPage";
+import { ChakraProvider, Spinner } from "@chakra-ui/react";
+import { persistor, store } from "@store/store";
+import { Provider } from "react-redux";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 
-import "utils/styles/flex.scss";
+import "@utils/styles/flex.scss";
+import "@utils/styles/global.scss";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <div children={<Outlet />} />
+        element: <div children={<Outlet />} />,
+        children: [
+            {
+                path: "conversation",
+                element: <ConversationPage />,
+                children: [
+                    {
+                        path: ":id",
+                        element: <ConversationPanelPage />
+                    }
+                ]
+            }
+        ]
     },
     {
         path: "/registration",
@@ -22,9 +40,13 @@ const router = createBrowserRouter([
 
 function App() {
     return (
-        <ChakraProvider>
-            <RouterProvider router={router} />
-        </ChakraProvider>
+        <Provider store={store}>
+            <PersistGate persistor={persistor}>
+                <ChakraProvider>
+                    <RouterProvider router={router} fallbackElement={<Spinner />} />
+                </ChakraProvider>
+            </PersistGate>
+        </Provider>
     );
 }
 
