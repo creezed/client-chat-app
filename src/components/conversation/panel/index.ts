@@ -1,1 +1,1 @@
-export * from "./ConversationPanel";
+export * from './ConversationPanel';

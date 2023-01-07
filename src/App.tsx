@@ -1,28 +1,32 @@
-import { AppRouter } from "./router";
-import { ChakraProvider, Spinner, createStandaloneToast } from "@chakra-ui/react";
-import { persistor, store } from "@store/store";
-import { Suspense } from "react";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-
-import "@utils/styles/flex.scss";
-import "@utils/styles/global.scss";
+import {
+  ChakraProvider,
+  createStandaloneToast,
+  Spinner,
+} from '@chakra-ui/react';
+import { Suspense } from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { AppRouter } from '~/router';
+import { persistor, store } from '~/store/store';
+import '~/styles/global.scss';
+import { theme } from '~/styles/theme';
 
 const { ToastContainer } = createStandaloneToast();
 
-function App() {
-    return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <ChakraProvider>
-                    <Suspense fallback={<Spinner />}>
-                        <AppRouter />
-                        <ToastContainer />
-                    </Suspense>
-                </ChakraProvider>
-            </PersistGate>
-        </Provider>
-    );
-}
+const App = () => {
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <ChakraProvider theme={theme}>
+          <Suspense fallback={<Spinner />}>
+            <AppRouter />
+            <ToastContainer />
+          </Suspense>
+        </ChakraProvider>
+      </PersistGate>
+    </Provider>
+  );
+};
 
+// eslint-disable-next-line import/no-default-export
 export default App;

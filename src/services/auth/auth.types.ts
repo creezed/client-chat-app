@@ -1,18 +1,18 @@
-import { IUser } from "@utils/types";
+import { IUser } from '~/utils/types';
 
 export interface AuthResponse {
-    token: string;
-    user: IUser;
+  token: string;
+  user: IUser;
 }
 
 export interface ILoginData {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface IRegistrationData {
-    email: string;
-    firstName: string;
-    lastName: string;
-    password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
 }

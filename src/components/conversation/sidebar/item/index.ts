@@ -1,1 +1,1 @@
-export * from "./ConversationSidebarItem";
+export * from './ConversationSidebarItem';
