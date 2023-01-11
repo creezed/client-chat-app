@@ -5,13 +5,13 @@ import { IUser } from '~/utils/types';
 interface IAuthInitialState {
   token: string | null;
   user: IUser | null;
-  status: 'pending' | 'fulfilled' | 'rejected' | null;
+  status: 'pending' | 'fulfilled' | 'rejected' | 'init';
 }
 
 const initialState: IAuthInitialState = {
   token: null,
   user: null,
-  status: null,
+  status: 'init',
 };
 
 export const authSlice = createSlice({
@@ -20,7 +20,7 @@ export const authSlice = createSlice({
   reducers: {
     logout(state) {
       state.user = null;
-      state.status = null;
+      state.status = 'init';
       state.token = null;
     },
   },

@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { AppRouter } from '~/router';
 import { persistor, store } from '~/store/store';
-import '~/styles/global.scss';
 import { theme } from '~/styles/theme';
 
 const { ToastContainer } = createStandaloneToast();

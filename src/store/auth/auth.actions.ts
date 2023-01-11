@@ -7,7 +7,7 @@ import {
   ILoginData,
   IRegistrationData,
 } from '~/services/auth';
-import { errorCatch } from '~/utils/helpers/error-catch';
+import { errorCatch } from '~/utils/helpers/error-catch/error-catch';
 
 const { toast } = createStandaloneToast();
 
