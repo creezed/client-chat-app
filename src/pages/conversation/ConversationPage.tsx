@@ -1,32 +1,40 @@
-import { Flex, Grid } from '@chakra-ui/react';
+import { Flex, Icon, ScaleFade, Text, useDisclosure } from '@chakra-ui/react';
 import { lazy } from 'react';
-import { Outlet } from 'react-router-dom';
-import { Layout } from '~/layout';
-import { Conversation } from '~/components/asides/conversation';
+import { BsChatText } from 'react-icons/bs';
+import { CreateConversationModal } from '~/components/modals/createConversationModal';
 
 const ConversationPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Layout>
-      <Grid
-        gridTemplateColumns="400px 1fr"
-        gridTemplateRows="1fr"
-        height="full"
-        maxHeight="full"
-        overflow="hidden"
-        as="section"
-      >
-        <Conversation />
-        <Flex
-          as="section"
-          flexDirection="column"
-          height="full"
-          maxHeight="100vh"
-          backgroundColor="gray.50"
-        >
-          <Outlet />
+    <Flex
+      w="full"
+      h="full"
+      justify="center"
+      align="center"
+      as="section"
+      backgroundColor="gray.50"
+    >
+      <ScaleFade in>
+        <Flex flexDir="column" align="center">
+          <Icon mb={4} as={BsChatText} fontSize="3rem" color="gray.600" />
+          <Text fontSize="lg" color="gray.500">
+            Выберите чат
+          </Text>
+          <Text fontSize="lg" color="gray.500">
+            или
+          </Text>
+          <Text
+            onClick={onOpen}
+            cursor="pointer"
+            fontSize="lg"
+            color="whatsapp.700"
+          >
+            создайте новый
+          </Text>
         </Flex>
-      </Grid>
-    </Layout>
+      </ScaleFade>
+      <CreateConversationModal isOpen={isOpen} onClose={onClose} />
+    </Flex>
   );
 };
 
