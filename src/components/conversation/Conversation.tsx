@@ -10,7 +10,7 @@ import {
 import { nanoid } from '@reduxjs/toolkit';
 import { BiSearch } from 'react-icons/bi';
 import { IoCreateOutline } from 'react-icons/io5';
-import { ConversationCard } from '~/components/asides/conversation/conversationCard';
+import { ConversationCard } from '~/components/conversation/conversationCard';
 import { CreateConversationModal } from '~/components/modals/createConversationModal';
 
 export const Conversation = () => {

@@ -18,7 +18,16 @@ const App = () => {
       <PersistGate persistor={persistor}>
         <ChakraProvider theme={theme}>
           <Suspense
-            fallback={<Progress isIndeterminate colorScheme="whatsapp" />}
+            fallback={
+              <Progress
+                isIndeterminate
+                position="absolute"
+                top={0}
+                left={0}
+                right={0}
+                colorScheme="whatsapp"
+              />
+            }
           >
             <AppRouter />
             <ToastContainer />
