@@ -1,6 +1,6 @@
 import { Grid } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import { Conversation } from '~/components/asides/conversation';
+import { Conversation } from '~/components/conversation';
 import { Sidebar } from '~/layout/sidebar';
 
 export const Layout = () => {
