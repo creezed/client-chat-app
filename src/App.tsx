@@ -1,7 +1,7 @@
 import {
   ChakraProvider,
   createStandaloneToast,
-  Progress,
+  Spinner,
 } from '@chakra-ui/react';
 import { Suspense } from 'react';
 import { Provider } from 'react-redux';
@@ -17,18 +17,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ChakraProvider theme={theme}>
-          <Suspense
-            fallback={
-              <Progress
-                isIndeterminate
-                position="absolute"
-                top={0}
-                left={0}
-                right={0}
-                colorScheme="whatsapp"
-              />
-            }
-          >
+          <Suspense fallback={<Spinner />}>
             <AppRouter />
             <ToastContainer />
           </Suspense>

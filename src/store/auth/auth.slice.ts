@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { login, registration } from '~/store/auth/auth.actions';
-import { IUser } from '~/utils/types';
+import { IUser } from '~/types/user';
 
 interface IAuthInitialState {
   token: string | null;

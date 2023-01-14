@@ -3,37 +3,25 @@ import { lazy, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Routes } from '~/types/routes';
 
-type TabsUrlsTuple = [
-  Routes.FRIENDS_ONLINE,
-  Routes.FRIENDS_ALL,
-  Routes.FRIENDS_REQUESTS,
-  Routes.FRIENDS_BLOCKED,
-  Routes.FRIENDS_ADD,
-];
+interface ITab {
+  link: string;
+  label: string;
+}
 
-type LocationPath =
-  | Routes.FRIENDS_ONLINE
-  | Routes.FRIENDS_ALL
-  | Routes.FRIENDS_REQUESTS
-  | Routes.FRIENDS_BLOCKED
-  | Routes.FRIENDS_ADD;
-
-const tabsUrls: TabsUrlsTuple = [
-  Routes.FRIENDS_ONLINE,
-  Routes.FRIENDS_ALL,
-  Routes.FRIENDS_REQUESTS,
-  Routes.FRIENDS_BLOCKED,
-  Routes.FRIENDS_ADD,
+const tabs: ITab[] = [
+  { label: 'Online', link: Routes.FRIENDS_ONLINE },
+  { label: 'All', link: Routes.FRIENDS_ALL },
+  { label: 'Requests', link: Routes.FRIENDS_REQUESTS },
+  { label: 'Blocked', link: Routes.FRIENDS_BLOCKED },
+  { label: 'Add to friends list', link: Routes.FRIENDS_ADD },
 ];
 
 export const FriendsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const path = location.pathname as LocationPath;
-
   const [indexTab, setTabIndex] = useState<number>(() =>
-    tabsUrls.includes(path) ? tabsUrls.indexOf(path) : 0,
+    tabs.findIndex(tab => tab.link === location.pathname),
   );
 
   const handleTabsChange = (index: number) => {
@@ -50,41 +38,16 @@ export const FriendsPage = () => {
         onChange={handleTabsChange}
       >
         <TabList as="ul">
-          <Tab
-            as="li"
-            cursor="pointer"
-            onClick={() => navigate('/friends/online')}
-          >
-            Online
-          </Tab>
-          <Tab
-            as="li"
-            cursor="pointer"
-            onClick={() => navigate('/friends/all')}
-          >
-            All
-          </Tab>
-          <Tab
-            as="li"
-            cursor="pointer"
-            onClick={() => navigate('/friends/requests')}
-          >
-            Requests
-          </Tab>
-          <Tab
-            as="li"
-            cursor="pointer"
-            onClick={() => navigate('/friends/blocked')}
-          >
-            Blocked
-          </Tab>
-          <Tab
-            as="li"
-            cursor="pointer"
-            onClick={() => navigate('/friends/add')}
-          >
-            Add to friends list
-          </Tab>
+          {tabs.map(tab => (
+            <Tab
+              as="li"
+              cursor="pointer"
+              onClick={() => navigate(tab.link)}
+              key={tab.link}
+            >
+              {tab.label}
+            </Tab>
+          ))}
         </TabList>
       </Tabs>
       <Outlet />
